@@ -1,28 +1,12 @@
-fn get_calories() -> &'static str {
-    return "
-1000
-2000
-3000
+use std::fs::read_to_string;
 
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000"
-}
-
-fn sum_calories(calories: &'static str) -> i32 {
-    let result = calories.lines().map(|cal| {cal.parse::<i32>().unwrap_or(0)}).sum();
-    return result;
+fn sum_calories(calories: &str) -> i32 {
+    let cals = calories.lines().map(|cal| {cal.parse::<i32>().unwrap_or(0)}).sum();
+    return cals;
 }
 
 fn main() {
-    let result = get_calories()
+    let result = read_to_string("input.txt").expect("To have content").as_str()
     .split("\n\n")
     .map(sum_calories)
         .max();
